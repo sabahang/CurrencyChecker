@@ -18,9 +18,7 @@ class CurrencyController {
     
     def select(){
         List<Currency> selectedCurrencies = Currency.getAll(params.currencies)
-        println selectedCurrencies
-        println "Hello World"
-        //        log.info {$selectedCurrencies}
+        [selectedCurrencies:selectedCurrencies]
     }
     
     def show(Currency currencyInstance) {

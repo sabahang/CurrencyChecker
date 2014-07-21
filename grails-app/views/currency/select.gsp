@@ -8,6 +8,12 @@
     </head>
     <body>
         <div>
+            <g:each var="child" in="${selectedCurrencies}">
+                <p>Currency: ${child.name}</p>
+                <p>Currency: ${child.rate}</p>
+            </g:each>
+        </div>
+        <div>
             <g:form name="selectCurrencyForm" url="[action:'select',controller:'currency']">
                 <g:select name="currencies" from="${Currency.list()}" optionValue="name" optionKey="id" multiple="true" />
                 <g:submitButton name="submit" value="Show Rates" />
