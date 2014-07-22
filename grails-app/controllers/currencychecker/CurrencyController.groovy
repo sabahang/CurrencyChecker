@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 import java.awt.TexturePaintContext.Int
 
 import grails.converters.JSON
-import groovyx.net.http.HTTPBuilder
+
 import groovy.json.JsonSlurper
 import java.net.URL
 
@@ -26,20 +26,19 @@ class CurrencyController {
     def select(){
         List<Currency> selectedCurrencies = Currency.getAll(params.currencies)
         //println updateFromOpenExchange("USD")
-        selectedCurrencies.eachWithIndex { obj, i -> obj.rate = updateFromOpenExchange(obj.name)};
+        loadCurrencies()
+        selectedCurrencies.each { obj -> obj.rate = updateFromOpenExchange(obj.name)};
         [selectedCurrencies:selectedCurrencies]
     }
-    def loadCurrencies(){
-        
-    }
+
     def updateFromOpenExchange(String sym){
     
-        String ROOT_URI = 'https://openexchangerates.org/api/latest.json?app_id=ac9c7766220144aab4944d14ad0931dc'
-        def apiURI = new URL(ROOT_URI)
+        String Rates_URI = 'https://openexchangerates.org/api/latest.json?app_id=ac9c7766220144aab4944d14ad0931dc'
+        def apiURI = new URL(Rates_URI)
 
         def slurper = new JsonSlurper()
-        def result = slurper.parse(apiURI)
-        result.rates."$sym"
+        def currency = slurper.parse(apiURI)
+        currency.rates."$sym"
     }
     private def getConfig() {
         grailsApplication.config.grails.plugin.openexchangerates
