@@ -23,26 +23,57 @@ class CurrencyController {
         respond Currency.list(params), model:[currencyInstanceCount: Currency.count()]
     }
     
-    def select(){
+    def getrates(){
         List<Currency> selected = Currency.getAll(params.currencies)
         
-        selected.each { obj -> obj.rate_one = rateFromOpenExchange(obj.symbol)};
-        
-        selected.each { obj -> Currency updateCurrencyRate = Currency.findBySymbol(obj.symbol)
-            updateCurrencyRate.rate_one = obj.rate_one
-            updateCurrencyRate.save(flush: true)};
-        
+        updateRates(selected)
+
         [selectedCurrencies:selected]
     }
 
-    def rateFromOpenExchange(String sym){
-    
+    protected void updateRates(List<Currency> currencies){
+        //source one
+        
+        currencies.each { obj -> obj.rate_one = getRateFromOpenExchange(obj.symbol)};
+        currencies.each { obj -> Currency currency = Currency.findBySymbol(obj.symbol)
+            currency.rate_one = obj.rate_one
+            currency.save(flush: true)};
+        
+        //source two
+        currencies.each { obj -> obj.rate_two = getRateFromCurrencyAPI(obj.symbol)};
+        currencies.each { obj -> Currency currency = Currency.findBySymbol(obj.symbol)
+            currency.rate_two = obj.rate_two
+            //println currency.rate_two
+            currency.save(flush: true)};
+        
+        //source three
+    }
+
+    def getRateFromOpenExchange(String sym){
+        //http://openexchangerates.org
         String Rates_URI = 'https://openexchangerates.org/api/latest.json?app_id=ac9c7766220144aab4944d14ad0931dc'
         def apiURI = new URL(Rates_URI)
 
         def slurper = new JsonSlurper()
         def currency = slurper.parse(apiURI)
         currency.rates."$sym"
+    }
+    def getRateFromCurrencyAPI(String sym){
+        //http://currency-api.appspot.com
+        String Rates_URI = 'http://currency-api.appspot.com/api/USD/' +sym+ '.json?key=6279598601eae2d106fa9481a421311f4d75287e'
+        def apiURI = new URL(Rates_URI)
+
+        def slurper = new JsonSlurper()
+        def currency = slurper.parse(apiURI)
+        String result = currency.rate
+        if (result != 'false'){
+            println "This Currency Is Supported"
+            return currency.rate
+        }
+        else {
+            println "This Currency Is not Supported"
+            return 0
+        }
     }
     private def getConfig() {
         grailsApplication.config.grails.plugin.openexchangerates
