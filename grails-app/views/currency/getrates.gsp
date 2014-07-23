@@ -8,6 +8,13 @@
     </head>
     <body>
         <div>
+            <g:form name="selectCurrencyForm" url="[action:'getrates',controller:'currency']">
+                <g:select name="currencies" from="${Currency.list()}" optionValue="name" optionKey="id" multiple="true" />
+                <g:submitButton name="submit" value="Show Rates" />
+            </g:form>
+
+        </div>
+        <div>
             <style type="text/css">
                 .tftable {font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #9dcc7a;border-collapse: collapse;}
                 .tftable th {font-size:12px;background-color:#abd28e;border-width: 1px;padding: 8px;border-style: solid;border-color: #9dcc7a;text-align:left;}
@@ -17,7 +24,7 @@
             </style>
 
             <table class="tftable" border="1">
-                <tr><th>Currency Name</th><th>Open Exchange</th><th>Currency API</th><th>Header 4</th></tr>
+                <tr><th>Currency Name</th><th>Open Exchange</th><th>Currency API</th><th>Rate Exchange</th></tr>
 
                 <g:each var="child" in="${selectedCurrencies}">
                     <tr>
@@ -30,12 +37,6 @@
             </table>
 
         </div>
-        <div>
-            <g:form name="selectCurrencyForm" url="[action:'getrates',controller:'currency']">
-                <g:select name="currencies" from="${Currency.list()}" optionValue="name" optionKey="id" multiple="true" />
-                <g:submitButton name="submit" value="Show Rates" />
-            </g:form>
 
-        </div>
     </body>
 </html>

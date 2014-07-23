@@ -43,12 +43,32 @@ class CurrencyController {
         currencies.each { obj -> obj.rate_two = getRateFromCurrencyAPI(obj.symbol)};
         currencies.each { obj -> Currency currency = Currency.findBySymbol(obj.symbol)
             currency.rate_two = obj.rate_two
-            //println currency.rate_two
             currency.save(flush: true)};
         
         //source three
+        currencies.each { obj -> obj.rate_three = getRateFromRateExchange(obj.symbol)};
+        currencies.each { obj -> Currency currency = Currency.findBySymbol(obj.symbol)
+            currency.rate_three = obj.rate_three
+            currency.save(flush: true)};
     }
+    def getRateFromRateExchange(String sym){
+        //http://rate-exchange.appspot.com/
+        String Rates_URI = 'http://rate-exchange.appspot.com/currency?from=USD&to='+sym+'&q=1'
+        
+        def apiURI = new URL(Rates_URI)
 
+        def slurper = new JsonSlurper()
+        def currency = slurper.parse(apiURI)
+        
+        String result = currency.rate
+        if (result != null){
+            println "This Currency Is Supported"
+            return currency.rate
+        } else {
+            println "This Currency Is not Supported"
+            return 0
+        }
+    }
     def getRateFromOpenExchange(String sym){
         //http://openexchangerates.org
         String Rates_URI = 'https://openexchangerates.org/api/latest.json?app_id=ac9c7766220144aab4944d14ad0931dc'
@@ -56,7 +76,16 @@ class CurrencyController {
 
         def slurper = new JsonSlurper()
         def currency = slurper.parse(apiURI)
-        currency.rates."$sym"
+        
+        String result = currency.rates."$sym"
+        
+        if (result != null){
+            println "This Currency Is Supported"
+            return currency.rates."$sym"
+        } else {
+            println "This Currency Is not Supported"
+            return 0
+        }
     }
     def getRateFromCurrencyAPI(String sym){
         //http://currency-api.appspot.com
@@ -66,11 +95,10 @@ class CurrencyController {
         def slurper = new JsonSlurper()
         def currency = slurper.parse(apiURI)
         String result = currency.rate
-        if (result != 'false'){
+        if (result != 'false' && result != null){
             println "This Currency Is Supported"
             return currency.rate
-        }
-        else {
+        } else {
             println "This Currency Is not Supported"
             return 0
         }
