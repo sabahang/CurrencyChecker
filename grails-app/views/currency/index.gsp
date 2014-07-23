@@ -26,7 +26,13 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'currency.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="rate" title="${message(code: 'currency.rate.label', default: 'Rate')}" />
+						<g:sortableColumn property="rate_one" title="${message(code: 'currency.rate_one.label', default: 'Rateone')}" />
+					
+						<g:sortableColumn property="rate_three" title="${message(code: 'currency.rate_three.label', default: 'Ratethree')}" />
+					
+						<g:sortableColumn property="rate_two" title="${message(code: 'currency.rate_two.label', default: 'Ratetwo')}" />
+					
+						<g:sortableColumn property="symbol" title="${message(code: 'currency.symbol.label', default: 'Symbol')}" />
 					
 					</tr>
 				</thead>
@@ -36,7 +42,13 @@
 					
 						<td><g:link action="show" id="${currencyInstance.id}">${fieldValue(bean: currencyInstance, field: "name")}</g:link></td>
 					
-						<td>${fieldValue(bean: currencyInstance, field: "rate")}</td>
+						<td>${fieldValue(bean: currencyInstance, field: "rate_one")}</td>
+					
+						<td>${fieldValue(bean: currencyInstance, field: "rate_three")}</td>
+					
+						<td>${fieldValue(bean: currencyInstance, field: "rate_two")}</td>
+					
+						<td>${fieldValue(bean: currencyInstance, field: "symbol")}</td>
 					
 					</tr>
 				</g:each>

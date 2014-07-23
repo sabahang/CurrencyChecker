@@ -10,7 +10,7 @@
         <div>
             <g:each var="child" in="${selectedCurrencies}">
                 <p>Currency: ${child.name}</p>
-                <p>Rate: ${child.rate}</p>
+                <p>Rate: ${child.rate_one}</p>
             </g:each>
         </div>
         <div>

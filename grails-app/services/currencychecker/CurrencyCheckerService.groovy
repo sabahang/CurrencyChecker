@@ -11,6 +11,6 @@ class CurrencyCheckerService {
         def apiURI = new URL(Currencies_URI)
         def slurper = new JsonSlurper()
         def symbols = slurper.parse(apiURI)
-        symbols.eachWithIndex { obj, i -> new Currency(name:obj.getKey(),rate:0).save()};
+        symbols.each { obj -> new Currency(symbol:obj.getKey(),rate_one:0,rate_two:0,rate_three:0,name:obj.getValue()).save()};
     }
 }

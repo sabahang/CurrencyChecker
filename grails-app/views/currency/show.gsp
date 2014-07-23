@@ -32,11 +32,38 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${currencyInstance?.rate}">
+				<g:if test="${currencyInstance?.rate_one}">
 				<li class="fieldcontain">
-					<span id="rate-label" class="property-label"><g:message code="currency.rate.label" default="Rate" /></span>
+					<span id="rate_one-label" class="property-label"><g:message code="currency.rate_one.label" default="Rateone" /></span>
 					
-						<span class="property-value" aria-labelledby="rate-label"><g:fieldValue bean="${currencyInstance}" field="rate"/></span>
+						<span class="property-value" aria-labelledby="rate_one-label"><g:fieldValue bean="${currencyInstance}" field="rate_one"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currencyInstance?.rate_three}">
+				<li class="fieldcontain">
+					<span id="rate_three-label" class="property-label"><g:message code="currency.rate_three.label" default="Ratethree" /></span>
+					
+						<span class="property-value" aria-labelledby="rate_three-label"><g:fieldValue bean="${currencyInstance}" field="rate_three"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currencyInstance?.rate_two}">
+				<li class="fieldcontain">
+					<span id="rate_two-label" class="property-label"><g:message code="currency.rate_two.label" default="Ratetwo" /></span>
+					
+						<span class="property-value" aria-labelledby="rate_two-label"><g:fieldValue bean="${currencyInstance}" field="rate_two"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currencyInstance?.symbol}">
+				<li class="fieldcontain">
+					<span id="symbol-label" class="property-label"><g:message code="currency.symbol.label" default="Symbol" /></span>
+					
+						<span class="property-value" aria-labelledby="symbol-label"><g:fieldValue bean="${currencyInstance}" field="symbol"/></span>
 					
 				</li>
 				</g:if>

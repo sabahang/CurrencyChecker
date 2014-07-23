@@ -24,14 +24,18 @@ class CurrencyController {
     }
     
     def select(){
-        List<Currency> selectedCurrencies = Currency.getAll(params.currencies)
-        //println updateFromOpenExchange("USD")
-        loadCurrencies()
-        selectedCurrencies.each { obj -> obj.rate = updateFromOpenExchange(obj.name)};
-        [selectedCurrencies:selectedCurrencies]
+        List<Currency> selected = Currency.getAll(params.currencies)
+        
+        selected.each { obj -> obj.rate_one = rateFromOpenExchange(obj.symbol)};
+        
+        selected.each { obj -> Currency updateCurrencyRate = Currency.findBySymbol(obj.symbol)
+            updateCurrencyRate.rate_one = obj.rate_one
+            updateCurrencyRate.save(flush: true)};
+        
+        [selectedCurrencies:selected]
     }
 
-    def updateFromOpenExchange(String sym){
+    def rateFromOpenExchange(String sym){
     
         String Rates_URI = 'https://openexchangerates.org/api/latest.json?app_id=ac9c7766220144aab4944d14ad0931dc'
         def apiURI = new URL(Rates_URI)

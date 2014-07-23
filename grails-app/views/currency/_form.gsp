@@ -11,12 +11,39 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'rate', 'error')} required">
-	<label for="rate">
-		<g:message code="currency.rate.label" default="Rate" />
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'rate_one', 'error')} required">
+	<label for="rate_one">
+		<g:message code="currency.rate_one.label" default="Rateone" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="rate" value="${fieldValue(bean: currencyInstance, field: 'rate')}" required=""/>
+	<g:field name="rate_one" value="${fieldValue(bean: currencyInstance, field: 'rate_one')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'rate_three', 'error')} required">
+	<label for="rate_three">
+		<g:message code="currency.rate_three.label" default="Ratethree" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="rate_three" value="${fieldValue(bean: currencyInstance, field: 'rate_three')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'rate_two', 'error')} required">
+	<label for="rate_two">
+		<g:message code="currency.rate_two.label" default="Ratetwo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="rate_two" value="${fieldValue(bean: currencyInstance, field: 'rate_two')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'symbol', 'error')} required">
+	<label for="symbol">
+		<g:message code="currency.symbol.label" default="Symbol" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="symbol" required="" value="${currencyInstance?.symbol}"/>
 
 </div>
 
